@@ -41,13 +41,11 @@ def encode_new_data(df_val, df_train):
     Returns:
     df_val: dataframe with the same encoding as df_train
     """
-    ### BEGIN SOLUTION
     df_val = remove_not_in(df_val, df_train)
     name2idx_u, df_train.iloc[:, 0], num_users = proc_col(df_train.iloc[:, 0])
     name2idx_m, df_train.iloc[:, 1], num_movies = proc_col(df_train.iloc[:, 1])
     df_val.iloc[:, 0] = df_val.iloc[:, 0].map(name2idx_u)
     df_val.iloc[:, 1] = df_val.iloc[:, 1].map(name2idx_m)
-    ### END SOLUTION
     return df_val
 
 def create_embedings(n, K):

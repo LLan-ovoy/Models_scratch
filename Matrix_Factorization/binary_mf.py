@@ -44,18 +44,15 @@ class MF(nn.Module):
         self.item_bias.weight.data.uniform_(-0.01,0.01)
 
     def forward(self, u, v):
-        ### BEGIN SOLUTION
         U = self.user_emb(u)
         V = self.item_emb(v)
         b_u = self.user_bias(u).squeeze()
         b_v = self.item_bias(v).squeeze()
         return torch.sigmoid((U*V).sum(1) +  b_u  + b_v)
-        ### END SOLUTION
 
 def train_one_epoch(model, train_df, optimizer):
     """ Trains the model for one epoch"""
     model.train()
-    ### BEGIN SOLUTION
     users = torch.LongTensor(train_df.user.values)
     items = torch.LongTensor(train_df.item.values)
     ratings = torch.FloatTensor(train_df.rating.values)
@@ -67,13 +64,11 @@ def train_one_epoch(model, train_df, optimizer):
     optimizer.step()
 
     train_loss = loss.item()
-    ### END SOLUTION
     return train_loss
 
 def valid_metrics(model, valid_df):
     """Computes validation loss and accuracy"""
     model.eval()
-    ### BEGIN SOLUTION
     users = torch.LongTensor(valid_df.user.values)
     items = torch.LongTensor(valid_df.item.values)
     ratings = torch.FloatTensor(valid_df.rating.values)
@@ -83,7 +78,6 @@ def valid_metrics(model, valid_df):
     valid_loss = loss.item()
     y_hat_binary = y_hat.detach().numpy()
     valid_acc = np.sum(ratings==y_hat_binary)/len(y_hat_binary)
-    ### END SOLUTION
     return valid_loss, valid_acc
 
 
